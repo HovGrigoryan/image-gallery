@@ -26,11 +26,24 @@ public class ImageService {
 
 
     public void save(Image image, MultipartFile file) throws IOException {
-        String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        File picture = new File(uploadDir, name);
-        file.transferTo(picture);
-        image.setPicUrl(name);
+        if (image.getId()==0){
+            String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            File picture = new File(uploadDir, name);
+            file.transferTo(picture);
+            image.setPicUrl(name);
+        }else {
+            if (file.isEmpty()){
+                image.setPicUrl(imageRepository.getOne(image.getId()).getPicUrl());
+            }else {
+                String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File picture = new File(uploadDir, name);
+                file.transferTo(picture);
+                image.setPicUrl(name);
+
+            }
+        }
         imageRepository.save(image);
+
     }
 
     public List<Image> findAll() {

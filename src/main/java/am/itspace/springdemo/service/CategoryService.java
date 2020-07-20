@@ -24,10 +24,21 @@ public class CategoryService {
     private String uploadDir;
 
     public void save(Category category, MultipartFile file) throws IOException {
-        String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        File picture = new File(uploadDir, name);
-        file.transferTo(picture);
-        category.setPicUrl(name);
+        if (category.getId() == 0) {
+            String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            File picture = new File(uploadDir, name);
+            file.transferTo(picture);
+            category.setPicUrl(name);
+        } else {
+            if (file.isEmpty()) {
+                category.setPicUrl(categoryRepository.getOne(category.getId()).getPicUrl());
+            } else {
+                String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File picture = new File(uploadDir, name);
+                file.transferTo(picture);
+                category.setPicUrl(name);
+            }
+        }
         categoryRepository.save(category);
     }
 
@@ -44,4 +55,5 @@ public class CategoryService {
     public Optional<Category> findById(int id) {
         return categoryRepository.findById(id);
     }
+
 }
