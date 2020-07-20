@@ -9,20 +9,20 @@
 <div th:each="image:${images}" th:width="50">
 
     <div class="col-md-4 col-sm-6">
-    <div class="portfolio-item" th:each="image:${images}">
+        <div class="portfolio-item">
 
-        <div class="thumb">
-            <div class="hover-effect">
+            <div class="thumb">
+                <div class="hover-effect">
 
+                </div>
+                <div class="image" th:width="50">
+                    <img th:src="@{/image(name = ${image.picUrl})}">
+                </div>
             </div>
-            <div class="image" th:width="50">
-                <img th:src="@{/image(name = ${image.picUrl})}">
-            </div>
+
         </div>
-
     </div>
 </div>
-    </div>
 
 </body>
 </html>

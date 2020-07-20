@@ -6,6 +6,7 @@
 </head>
 <body>
 
+
 <h3>Add Category:</h3>
 <form action="/addCategory" method="post" enctype="multipart/form-data">
     <input type="text" name="name" placeholder="Please input Category name"/><br>
@@ -17,13 +18,57 @@
 <br>
 <h3>Add Image:</h3>
 <form action="/addImage" method="post" enctype="multipart/form-data">
-    <input type="text" name="name" placeholder="Please input Category name"/><br>
+    <input type="text" name="name" placeholder="Please input Image name"/><br>
     <select name="category.id">
         <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
     </select>
     <input type="file" name="image"/><br>
     <input type="submit" value="add">
 </form>
+<h3>Category:</h3>
+
+<ul>
+    <div th:each="category:${categories}" th:remove="tag">
+
+        <li th:text="${category.name}"></li>
+        <img th:src="@{/image(name=${category.picUrl})}" width="20"
+             th:if="${category.picUrl!=null && category.picUrl.length()!=0}"><br>
+        <a th:href="@{/deleteCategory(id=${category.id})}">delete</a>
+        <a th:href="@{/editCategory(id=${category.id})}">update</a>
+        <br>
+        <br>
+        <br>
+
+    </div>
+
+
+</ul>
+
+
+<br>
+<br>
+<br>
+<h3>Images:</h3>
+
+<ul>
+    <div th:each="image:${images}" th:remove="tag">
+
+        <li th:text="${image.name}"></li>
+        <li th:text="${image.category.name}"></li>
+        <li th:text="${image.uploadDate}"></li>
+        <img th:src="@{/image(name=${image.picUrl})}" width="20"
+             th:if="${image.picUrl!=null && image.picUrl.length()!=0}"><br>
+        <a th:href="@{/deleteImage(id=${image.id})}">delete</a>
+        <a th:href="@{/editImage(id=${image.id})}">update</a>
+        <br>
+        <br>
+        <br>
+
+    </div>
+
+
+</ul>
+
 
 </body>
 </html>

@@ -30,16 +30,15 @@ public class MainController {
 
     private final ImageService imageService;
     private final CategoryService categoryService;
-    @Value("C:\\Users\\Hov\\Desktop\\GIT JAVA\\image-gallery\\upload")
+    @Value("${file.upload.dir}")
     private String uploadDir;
 
     @GetMapping("/")
-    public String homepage(Model model, @RequestParam(name = "msg", required = false) String msg) {
+    public String homepage(Model model) {
         List<Image> images = imageService.findAll();
         List<Category> categories = categoryService.findAll();
         model.addAttribute("images", images);
         model.addAttribute("categories", categories);
-//        model.addAttribute("msg", msg);
         return "index";
 
     }
@@ -47,12 +46,14 @@ public class MainController {
     @GetMapping("/admin")
     public String adminPage(Model model) {
         List<Category> categories = categoryService.findAll();
+        List<Image> images = imageService.findAll();
         model.addAttribute("categories", categories);
+        model.addAttribute("images", images);
         return "adminPage";
     }
 
-    @GetMapping("/CategoryImage")
-    public String categoryimage(Model model, @RequestParam("id") int id) {
+    @GetMapping("/categoryImage")
+    public String categoryImage(Model model, @RequestParam("id") int id) {
         List<Image> images = imageService.findAllByCategoryId(id);
         model.addAttribute("images", images);
         return "imagePage";

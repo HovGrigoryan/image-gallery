@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +39,12 @@ public class ImageService {
 
     public List<Image> findAllByCategoryId(int id) {
         return imageRepository.findAllByCategory_Id(id);
+    }
+
+    public void delete(int id) {
+        imageRepository.deleteById(id);
+    }
+    public Optional<Image> findById(int id) {
+        return imageRepository.findById(id);
     }
 }
