@@ -10,8 +10,8 @@
 
 <h3>Add Category:</h3>
 <form action="/addCategory" method="post" enctype="multipart/form-data">
-    <input id="inp1" type="text" name="name" placeholder="Please input Category name"/><br>
-    <input type="file" name="image"/><br>
+    <input class="inp1" type="text" name="name" placeholder="Please input Category name"/><br>
+    <input class="inp2" type="file" name="image"/><br>
     <input type="submit" value="add">
 </form>
 <br>
@@ -19,7 +19,7 @@
 <br>
 <h3>Add Image:</h3>
 <form action="/addImage" method="post" enctype="multipart/form-data">
-    <input type="text" name="name" placeholder="Please input Image name"/><br>
+    <input class="inp1" type="text" name="name" placeholder="Please input Image name"/><br>
     <select name="category.id">
         <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
     </select>
@@ -41,14 +41,7 @@
         <br>
 
     </div>
-
-
 </ul>
-
-
-<br>
-<br>
-<br>
 <h3>Images:</h3>
 
 <ul>
