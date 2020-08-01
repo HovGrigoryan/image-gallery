@@ -21,7 +21,7 @@ import java.util.Optional;
 public class ImageService {
 
     private final ImageRepository imageRepository;
-    @Value("C:\\Users\\Hov\\Desktop\\GIT JAVA\\image-gallery\\upload")
+    @Value("${file.upload.dir}")
     private String uploadDir;
 
 
@@ -60,4 +60,6 @@ public class ImageService {
     public Optional<Image> findById(int id) {
         return imageRepository.findById(id);
     }
+
+
 }

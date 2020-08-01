@@ -7,6 +7,32 @@
 </head>
 <body>
 
+<form action="/addUser" method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Please input name"/><br>
+    <input type="text" name="surname" placeholder="Please input surname"/><br>
+    <input type="text" name="username" placeholder="Please input username"/><br>
+    <input type="password" name="password" placeholder="Please input password"/><br>
+    <select name="role">
+        <option value="USER">user</option>
+        <option value="ADMIN">admin</option>
+    </select>
+    <input type="file" name="image"/><br>
+    <input type="submit" value="add">
+</form>
+<br>
+<h3>All Users</h3>
+<ul>
+    <div th:each="user: ${users}" th:remove="tag">
+        <img th:src="@{/image(name=${user.profilePic})}" width="20"
+             th:if="${user.profilePic!=null && user.profilePic.length()!=0}"/>
+
+        <li th:text="${user.name} + ' ' + ${user.surname}"></li>
+        <a th:href="@{/deleteUser(id=${user.id})}">delete</a>
+
+    </div>
+
+</ul>
+
 
 <h3>Add Category:</h3>
 <form action="/addCategory" method="post" enctype="multipart/form-data">

@@ -20,7 +20,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final ImageRepository imageRepository;
-    @Value("C:\\Users\\Hov\\Desktop\\GIT JAVA\\image-gallery\\upload")
+    @Value("${file.upload.dir}")
     private String uploadDir;
 
     public void save(Category category, MultipartFile file) throws IOException {

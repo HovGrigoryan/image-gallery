@@ -1,5 +1,6 @@
 package am.itspace.springdemo.config;
 
+import am.itspace.springdemo.security.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,19 +16,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserDetailServiceImpl userDetailService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .formLogin()
-//                .defaultSuccessUrl("/admin")
+                .loginPage("/loginPage")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/admin")
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/admin").hasAnyRole("ADMIN");
+                .antMatchers("/admin").hasAnyAuthority("ADMIN");
 
 
     }
@@ -35,10 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("poxos")
-                .password(passwordEncoder.encode("poxos"))
-                .roles("ADMIN");
+        auth.userDetailsService(userDetailService)
+                .passwordEncoder(passwordEncoder);
     }
 
 
